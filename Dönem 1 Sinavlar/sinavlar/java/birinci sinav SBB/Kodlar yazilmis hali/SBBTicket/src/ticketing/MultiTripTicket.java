@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 
 public class MultiTripTicket extends Ticket implements Stampable{
-    private SingleTicket[] usedTrips;
+    private SingleTicket[] usedTrips = new SingleTicket[6];
 
     public MultiTripTicket(Zone[] zones) {
         super(zones, null);
@@ -12,19 +12,39 @@ public class MultiTripTicket extends Ticket implements Stampable{
 
     @Override
     public boolean isValid(Zone zone, LocalDateTime time) {
-        return super.isValid(zone, time);
+        SingleTicket last = getLastStampedTicket();
+        if (last == null) {
+            return false;
+        }
+        return last.isValid(zone, time);
     }
 
     @Override
     public void stamp(LocalDateTime time) {
-
+        for (int i = 0; i < usedTrips.length; i++) {
+            if (usedTrips[i] == null) {
+                usedTrips[i] = new SingleTicket(zones);
+                break;
+            }
+        }
     }
 
     public int getNbOfUnusedTrips(){
-        return 0;
+        int used = 0;
+        for (SingleTicket st : usedTrips) {
+            if (st != null) {
+                used++;
+            }
+        }
+        return usedTrips.length - used;
     }
 
     public SingleTicket getLastStampedTicket(){
+        for (int i = usedTrips.length - 1; i >= 0; i--) {
+            if (usedTrips[i] != null) {
+                return usedTrips[i];
+            }
+        }
         return null;
     }
 

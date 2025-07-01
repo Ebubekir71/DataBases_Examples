@@ -3,7 +3,7 @@ package ticketing;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
-public class Ticket implements Verifiable {
+public abstract class Ticket implements Verifiable {
     private LocalDateTime timestamp;
     protected Zone[] zones;
 
@@ -12,10 +12,12 @@ public class Ticket implements Verifiable {
         this.timestamp = timestamp;
     }
 
-    @Override
-    public boolean isValid(Zone zone, LocalDateTime time) {
-        return false;
+    public LocalDateTime getTimestamp() {
+        return timestamp;
     }
+
+    @Override
+    public abstract boolean isValid(Zone zone, LocalDateTime time);
 
     @Override
     public String toString() {
