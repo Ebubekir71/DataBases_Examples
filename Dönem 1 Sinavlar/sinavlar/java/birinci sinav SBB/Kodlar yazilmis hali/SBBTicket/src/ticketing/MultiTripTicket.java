@@ -50,9 +50,16 @@ public class MultiTripTicket extends Ticket implements Stampable{
 
     @Override
     public String toString() {
-        return "MultiTripTicket{" +
-                "usedTrips=" + Arrays.toString(usedTrips) +
-                ", zones=" + Arrays.toString(zones) +
-                '}';
+        int used = 0;
+        for (SingleTicket st : usedTrips) {
+            if (st != null) used++;
+        }
+
+        return "Validation result of Multitrip ticketing.Ticket [\n" +
+                "zones: " + Arrays.toString(zones) + "\n" +
+                "timestamp: " + getTimestamp() + "\n" +
+                "hashcode: " + this.hashCode() + "\n" +
+                "used trips: " + used + "\n" +
+                "Last stamped trip hashcode: " + (getLastStampedTicket() != null ? getLastStampedTicket().hashCode() : "none") + "\n]";
     }
 }

@@ -21,7 +21,7 @@ public abstract class Ticket implements Verifiable {
 
     @Override
     public String toString() {
-        return "Ticket{" +
+        return "ticketing.Ticket{" +
                 "timestamp=" + timestamp +
                 ", zones=" + Arrays.toString(zones) +
                 '}';
